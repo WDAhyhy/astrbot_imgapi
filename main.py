@@ -24,6 +24,7 @@ class SetuPlugin(Star):
             try:
                 # 构建消息链
                 chain = [
+                    Plain("如下图"),
                     Image.fromURL(self.nh_url)  # 从URL加载图片
                 ]
 
