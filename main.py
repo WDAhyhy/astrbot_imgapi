@@ -14,6 +14,9 @@ class SetuPlugin(Star):
         self.nh_url = self.api_url +'/NON-H'
     @filter.command("img")
     async def get_tu(self, event: AstrMessageEvent,n: int = 1):
+        if n>20 :
+            yield event.plain_result("\n你发恁多干哈？")
+            return
         # 检查是否配置了API URL
         if not self.api_url:
             yield event.plain_result("\n请先在配置文件中设置API地址")
@@ -36,6 +39,9 @@ class SetuPlugin(Star):
 
     @filter.command("imgh")
     async def get_setu(self, event: AstrMessageEvent,n: int = 1):
+        if n>20 :
+            yield event.plain_result("\n你发恁多干哈？")
+            return
         # 检查是否配置了API URL
         if not self.api_url:
             yield event.plain_result("\n请先在配置文件中设置API地址")
@@ -46,7 +52,7 @@ class SetuPlugin(Star):
         async with aiohttp.ClientSession(connector=ssl_context) as session:
             for i in range(n):
                 try:
-    
+
                     # 构建消息链
                     chain = [
                         Plain(f"正在发送~~~({i+1}/{n})"),
