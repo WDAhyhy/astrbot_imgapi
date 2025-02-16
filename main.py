@@ -15,7 +15,7 @@ class SetuPlugin(Star):
     @filter.command("img")
     async def get_tu(self, event: AstrMessageEvent,n: int = 1):
         if n>20 :
-            yield event.plain_result("\n你发恁多干哈？")
+            yield event.plain_result("你要恁多干哈？")
             return
         # 检查是否配置了API URL
         if not self.api_url:
@@ -40,7 +40,7 @@ class SetuPlugin(Star):
     @filter.command("imgh")
     async def get_setu(self, event: AstrMessageEvent,n: int = 1):
         if n>20 :
-            yield event.plain_result("\n你发恁多干哈？")
+            yield event.plain_result("你要恁多干哈？")
             return
         # 检查是否配置了API URL
         if not self.api_url:
