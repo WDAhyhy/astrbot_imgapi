@@ -1,0 +1,9 @@
+{
+    "api_url": {
+        "description": "随机图片API地址",
+        "type": "string",
+        "hint": "填写获取随机图片的API地址",
+        "default": "",
+        "obvious_hint": true
+    }
+}
