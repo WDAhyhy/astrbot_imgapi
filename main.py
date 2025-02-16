@@ -11,7 +11,7 @@ class SetuPlugin(Star):
         self.config = config
         self.api_url = config.get("api_url", "")
         self.h_url = self.api_url +'/h'
-        self.nh_url = self.api_url +'/nh'
+        self.nh_url = self.api_url +'/non-h'
     @filter.command("img")
     async def get_setu(self, event: AstrMessageEvent):
         # 检查是否配置了API URL
