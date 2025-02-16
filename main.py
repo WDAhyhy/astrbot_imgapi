@@ -25,7 +25,8 @@ class SetuPlugin(Star):
                 # 构建消息链
                 chain = [
                     Plain("如下图"),
-                    Image.fromURL(self.nh_url)  # 从URL加载图片
+                    Image.fromURL("https://pic.icystar.de/NON-H")
+                    # Image.fromURL(self.nh_url)  # 从URL加载图片
                 ]
 
                 yield event.chain_result(chain)
