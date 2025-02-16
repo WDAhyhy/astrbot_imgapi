@@ -34,6 +34,7 @@ class SetuPlugin(Star):
 
     @filter.command("imgh")
     async def get_setu(self, event: AstrMessageEvent):
+        yield event.plain_result("help_text")
         # 检查是否配置了API URL
         if not self.api_url:
             yield event.plain_result("\n请先在配置文件中设置API地址")
