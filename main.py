@@ -13,7 +13,7 @@ class SetuPlugin(Star):
         self.h_url = self.api_url +'/H'
         self.nh_url = self.api_url +'/NON-H'
     @filter.command("img")
-    async def get_tu(self, event: AstrMessageEvent):
+    async def get_tu(self, event: AstrMessageEvent,m: int):
         # 检查是否配置了API URL
         if not self.api_url:
             yield event.plain_result("\n请先在配置文件中设置API地址")
@@ -21,17 +21,18 @@ class SetuPlugin(Star):
         # 创建一个不验证SSL的连接上下文
         ssl_context = aiohttp.TCPConnector(verify_ssl=False)
         async with aiohttp.ClientSession(connector=ssl_context) as session:
-            try:
-                # 构建消息链
-                chain = [
-                    Plain("正在发送~~~"),
+            for i in range(n):
+                try:
+                    # 构建消息链
+                    chain = [
+                        Plain("正在发送~~~"),
 
-                    Image.fromURL(self.nh_url)  # 从URL加载图片
-                ]
+                        Image.fromURL(self.nh_url)  # 从URL加载图片
+                    ]
 
-                yield event.chain_result(chain)
-            except Exception as e:
-                yield event.plain_result(f"\n请求失败: {str(e)}")
+                    yield event.chain_result(chain)
+                except Exception as e:
+                    yield event.plain_result(f"\n请求失败: {str(e)}")
 
     @filter.command("imgh")
     async def get_setu(self, event: AstrMessageEvent):
