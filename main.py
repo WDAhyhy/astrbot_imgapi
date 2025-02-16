@@ -10,8 +10,8 @@ class SetuPlugin(Star):
         super().__init__(context)
         self.config = config
         self.api_url = config.get("api_url", "")
-        self.h_url = self.api_url +'/h'
-        self.nh_url = self.api_url +'/non-h'
+        self.h_url = self.api_url +'/H'
+        self.nh_url = self.api_url +'/NON-H'
     @filter.command("img")
     async def get_tu(self, event: AstrMessageEvent):
         # 检查是否配置了API URL
@@ -24,9 +24,9 @@ class SetuPlugin(Star):
             try:
                 # 构建消息链
                 chain = [
-                    Plain("如下图"),
-                    Image.fromURL("https://pic.icystar.de/NON-H")
-                    # Image.fromURL(self.nh_url)  # 从URL加载图片
+                    Plain("正在发送~~~"),
+
+                    Image.fromURL(self.nh_url)  # 从URL加载图片
                 ]
 
                 yield event.chain_result(chain)
@@ -47,6 +47,7 @@ class SetuPlugin(Star):
 
                 # 构建消息链
                 chain = [
+                    Plain("正在发送~~~"),
                     Image.fromURL(self.h_url)  # 从URL加载图片
                 ]
 
