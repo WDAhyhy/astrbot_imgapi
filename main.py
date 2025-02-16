@@ -18,7 +18,6 @@ class SetuPlugin(Star):
         if not self.api_url:
             yield event.plain_result("\n请先在配置文件中设置API地址")
             return
-        yield event.plain_result(f"\n 链接{self.nh_url}")
         # 创建一个不验证SSL的连接上下文
         ssl_context = aiohttp.TCPConnector(verify_ssl=False)
         async with aiohttp.ClientSession(connector=ssl_context) as session:
