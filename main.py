@@ -13,7 +13,7 @@ class SetuPlugin(Star):
         self.h_url = self.api_url +'/H'
         self.nh_url = self.api_url +'/NON-H'
     @filter.command("img")
-    async def get_tu(self, event: AstrMessageEvent,n: int):
+    async def get_tu(self, event: AstrMessageEvent,n: int = 1):
         # 检查是否配置了API URL
         if not self.api_url:
             yield event.plain_result("\n请先在配置文件中设置API地址")
