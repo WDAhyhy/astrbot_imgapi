@@ -2,7 +2,7 @@ from astrbot.api.message_components import *
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star, register
 import aiohttp
-
+import asyncio
 
 @register("fish_apiimg", "案板上的鹹魚", "从API获取图片。双路径：使用 /img 和/imgh 获取。(自用)", "1.0")
 class SetuPlugin(Star):
@@ -33,8 +33,8 @@ class SetuPlugin(Star):
                         Image.fromURL(self.nh_url),  # 从URL加载图片
                         Plain(f"正在发送~~~({i + 1}/{n})")
                     ]
-
-                    await event.chain_result(chain)
+                    yield event.chain_result(chain)
+                    await asyncio.sleep(3)
                 except Exception as e:
                     yield event.plain_result(f"\n请求失败: {str(e)}")
 
