@@ -34,7 +34,7 @@ class SetuPlugin(Star):
                         Plain(f"正在发送~~~({i + 1}/{n})")
                     ]
 
-                    yield event.chain_result(chain)
+                    await event.chain_result(chain)
                 except Exception as e:
                     yield event.plain_result(f"\n请求失败: {str(e)}")
 
