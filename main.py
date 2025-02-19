@@ -33,7 +33,7 @@ class SetuPlugin(Star):
                         Image.fromURL(self.nh_url)  # 从URL加载图片
                     ]
 
-                    return event.chain_result(chain)
+                    yield event.chain_result(chain)
                 except Exception as e:
                     yield event.plain_result(f"\n请求失败: {str(e)}")
 
