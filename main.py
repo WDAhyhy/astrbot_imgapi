@@ -23,7 +23,7 @@ class SetuPlugin(Star):
             return
         # 创建一个不验证SSL的连接上下文
         ssl_context = aiohttp.TCPConnector(verify_ssl=False)
-        async with aiohttp.ClientSession(connector=ssl_context) as session:
+        async with aiohttp.ClientSession() as session:
             for i in range(n):
                 try:
                     # 构建消息链
