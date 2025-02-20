@@ -24,9 +24,12 @@ class SetuPlugin(Star):
         # 创建一个不验证SSL的连接上下文
         ssl_context = aiohttp.TCPConnector(verify_ssl=False)
         async with aiohttp.ClientSession() as session:
-            async with session.head(self.nh_url, timeout=5) as resp:
-                if resp.status != 200:
-                    raise ValueError(f"图片 URL 无效，状态码: {resp.status}")
+            async with session.head(self.nh_url, timeout=2) as resp:
+                try:
+                    if resp.status != 200:
+                        raise ValueError(f"图片 URL 无效，状态码: {resp.status}")
+                except Exception as e:
+                        yield event.plain_result(f"\n请求失败: {str(e)}")
             for i in range(n):
                 try:
 
