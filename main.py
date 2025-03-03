@@ -161,7 +161,7 @@ class SetuPlugin(Star):
             output_files=await self.convert_to_wechat_mp3(input_file, output_file)
             output_files=sorted(output_files, key=lambda x: int(x[6:9]))
             chain = [
-                Plain(f"歌曲名称:{title}"),
+                Plain(f"歌曲名称:{title} "),
                 Plain(f"艺术家:{artist}")
             ]
             yield event.chain_result(chain)
