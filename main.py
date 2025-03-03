@@ -92,7 +92,7 @@ class SetuPlugin(Star):
         """ 清理文件名非法字符 """
         return re.sub(r'[\\/:*?"<>|]', '_', filename)
 
-    def convert_to_wechat_mp3(self,input_file, output_file):
+    async def convert_to_wechat_mp3(self,input_file, output_file):
         """
         使用 ffmpeg 把歌曲转换成微信语音格式（amr-nb 8000Hz 单声道）
         """
@@ -158,7 +158,7 @@ class SetuPlugin(Star):
             input_file = filename
             output_file = title + '.wav'
             # 执行转换
-            output_files=self.convert_to_wechat_mp3(input_file, output_file)
+            output_files=await self.convert_to_wechat_mp3(input_file, output_file)
             for item in output_files:
                 yield event.plain_result(item)
             for i in range(len(output_files)):
