@@ -163,7 +163,7 @@ class SetuPlugin(Star):
 
             for i in range(len(output_files)):
                 chain = []
-                chain.append(Plain(f"第{i+1}段"))
+
                 chain.append(Record.fromFileSystem(output_files[i]))
                 yield event.chain_result(chain)
                 await asyncio.sleep(2)
