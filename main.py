@@ -160,8 +160,8 @@ class SetuPlugin(Star):
             # 执行转换
             output_files=self.convert_to_wechat_mp3(input_file, output_file)
             chain=[]
-            for item in output_files:
-                chain.append(Plain("第一段"))
+            for i in range(len(output_files)):
+                chain.append(Plain(f"第{i+1}段"))
                 chain.append(Record.fromFileSystem(item))
             chain.append(Plain("已经发送音乐"))
             yield event.chain_result(chain)
