@@ -147,6 +147,6 @@ class SetuPlugin(Star):
                 path=output_file
             )
             subprocess.run(['rm', output_file], check=True)
-            yield event.chain_result([music])
+            yield event.chain_result([music,Plain("已经发送音乐")])
         except Exception as e:
             yield event.plain_result(f"\n请求失败: {str(e)}")
