@@ -133,8 +133,12 @@ class SetuPlugin(Star):
             duration = song.get('duration')
             path = song.get('path')
             suffix = song.get('suffix')
+            url = f'https://music.icystar.de/rest/download?u={username}&t={token}&s={salt}&v=1.16.1&c=myapp&id={song_id}'
+            download_response = requests.get(url)
             filename = f"{title}.{suffix}"
-
+            with open(filename, 'wb') as file:
+                file.write(download_response.content)
+            print(f"已保存: {filename}")
             input_file = filename
             output_file = title + '.mp3'
             # 执行转换
