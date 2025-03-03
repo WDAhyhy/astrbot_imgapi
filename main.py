@@ -123,6 +123,7 @@ class SetuPlugin(Star):
             namespace = {'subsonic': 'http://subsonic.org/restapi'}
             # 提取歌曲信息
             songs = root.findall('.//subsonic:randomSongs/subsonic:song', namespace)
+
             song=songs[0]
             song_id = song.get('id')
             title = song.get('title')
@@ -131,6 +132,8 @@ class SetuPlugin(Star):
             year = song.get('year')
             duration = song.get('duration')
             path = song.get('path')
+            suffix = song.get('suffix')
+            filename = f"{title}.{suffix}"
 
             input_file = filename
             output_file = title + '.mp3'
