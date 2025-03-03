@@ -84,6 +84,7 @@ class SetuPlugin(Star):
                     ]
 
                     yield event.chain_result(chain)
+                    await asyncio.sleep(1)
                 except Exception as e:
                     yield event.plain_result(f"\n请求失败: {str(e)}")
 
@@ -160,6 +161,7 @@ class SetuPlugin(Star):
             output_files=self.convert_to_wechat_mp3(input_file, output_file)
             chain=[]
             for item in output_files:
+                chain.append(Plain("第一段"))
                 chain.append(Record.fromFileSystem(item))
             chain.append(Plain("已经发送音乐"))
             yield event.chain_result(chain)
