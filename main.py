@@ -166,9 +166,9 @@ class SetuPlugin(Star):
                 chain.append(Plain(f"第{i+1}段"))
                 chain.append(Record.fromFileSystem(output_files[i]))
                 yield event.chain_result(chain)
-                await asyncio.sleep(5)
+                await asyncio.sleep(2)
 
-            subprocess.run(['rm', output_file], check=True)
+            subprocess.run(['rm', '*.wav'], check=True)
 
         except Exception as e:
             yield event.plain_result(f"\n请求失败: {str(e)}")
