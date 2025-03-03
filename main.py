@@ -122,7 +122,8 @@ class SetuPlugin(Star):
             # 解析 XML 时，处理命名空间
             namespace = {'subsonic': 'http://subsonic.org/restapi'}
             # 提取歌曲信息
-            random_songs = root.findall('.//subsonic:randomSongs/subsonic:song', namespace)
+            songs = root.findall('.//subsonic:randomSongs/subsonic:song', namespace)
+            song=songs[0]
             song_id = song.get('id')
             title = song.get('title')
             album = song.get('album')
