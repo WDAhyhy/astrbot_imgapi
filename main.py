@@ -10,6 +10,7 @@ import requests
 import xml.etree.ElementTree as ET
 import subprocess
 import re
+import glob
 from astrbot.api.message_components import Video
 @register("fish_apiimg", "案板上的鹹魚", "从API获取图片。双路径：使用 /img 和/imgh 获取。(自用)", "1.0")
 class SetuPlugin(Star):
@@ -104,7 +105,21 @@ class SetuPlugin(Star):
             output_file  # 输出文件（记得保证后缀是.mp3）
         ]
         subprocess.run(command, check=True)
+        command = [
+            'ffmpeg',
+            '-i', input_file,  # 输入文件
+            '-ar', '8000',  # 设置采样率为 8000 Hz
+            '-ac', '1',  # 单声道
+            '-b:a', '32k',  # 设置比特率为 32 kbps
+            '-f', 'segment',  # 使用分段模式
+            '-segment_time', '59',  # 每段最大时长为 59 秒
+            '-y',  # 强制覆盖已有文件
+            'output%03d.wav'  # 输出文件（多个分段的文件）
+        ]
+        subprocess.run(command, check=True)
+        output_files = glob.glob('output*.wav')
         subprocess.run(['rm', input_file], check=True)
+        return output_files
 
     @filter.command("getsong")
     async def get_song(self, event: AstrMessageEvent):
@@ -142,11 +157,12 @@ class SetuPlugin(Star):
             input_file = filename
             output_file = title + '.wav'
             # 执行转换
-            self.convert_to_wechat_mp3(input_file, output_file)
-            # music = Video.fromFileSystem(
-            #     path=output_file
-            # )
-            yield event.chain_result([Record.fromFileSystem(output_file), Plain("已经发送音乐")])
+            output_files=self.convert_to_wechat_mp3(input_file, output_file)
+            chain=[]
+            for item in output_files:
+                chain.append(Record.fromFileSystem(item))
+            chain.append(Plain("已经发送音乐"))
+            yield event.chain_result(chain)
             subprocess.run(['rm', output_file], check=True)
 
         except Exception as e:
