@@ -164,6 +164,7 @@ class SetuPlugin(Star):
                 Plain(f"歌曲名称:{title}"),
                 Plain(f"艺术家:{artist}")
             ]
+            yield event.chain_result(chain)
             for i in range(len(output_files)):
                 chain = []
                 chain.append(Record.fromFileSystem(output_files[i]))
