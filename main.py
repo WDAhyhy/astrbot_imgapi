@@ -109,11 +109,11 @@ class SetuPlugin(Star):
         command = [
             'ffmpeg',
             '-i', input_file,  # 输入文件
-            '-ar', '8000',  # 设置采样率为 8000 Hz
+            '-ar', '48000',  # 设置采样率为 8000 Hz
             '-ac', '1',  # 单声道
             '-b:a', '32k',  # 设置比特率为 32 kbps
             '-f', 'segment',  # 使用分段模式
-            '-segment_time', '59',  # 每段最大时长为 59 秒
+            '-segment_time', '60',  # 每段最大时长为 59 秒
             '-y',  # 强制覆盖已有文件
             'output%03d.wav'  # 输出文件（多个分段的文件）
         ]
