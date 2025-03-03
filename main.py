@@ -168,7 +168,9 @@ class SetuPlugin(Star):
                 yield event.chain_result(chain)
                 await asyncio.sleep(2)
 
-            subprocess.run(['rm', '*.wav'], check=True)
+            subprocess.run(['rm', output_file], check=True)
+            for file in output_files:
+                os.remove(file)
 
         except Exception as e:
             yield event.plain_result(f"\n请求失败: {str(e)}")
