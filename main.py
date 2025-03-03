@@ -140,7 +140,7 @@ class SetuPlugin(Star):
                 file.write(download_response.content)
             print(f"已保存: {filename}")
             input_file = filename
-            output_file = title + '.mp3'
+            output_file = title + '.wav'
             # 执行转换
             self.convert_to_wechat_mp3(input_file, output_file)
             # music = Video.fromFileSystem(
@@ -148,6 +148,6 @@ class SetuPlugin(Star):
             # )
             yield event.chain_result([Record.fromFileSystem(output_file), Plain("已经发送音乐")])
             subprocess.run(['rm', output_file], check=True)
-            
+
         except Exception as e:
             yield event.plain_result(f"\n请求失败: {str(e)}")
