@@ -159,12 +159,14 @@ class SetuPlugin(Star):
             output_file = title + '.wav'
             # 执行转换
             output_files=self.convert_to_wechat_mp3(input_file, output_file)
-            chain=[]
+
             for i in range(len(output_files)):
+                chain = []
                 chain.append(Plain(f"第{i+1}段"))
                 chain.append(Record.fromFileSystem(output_files[i]))
-            chain.append(Plain("已经发送音乐"))
-            yield event.chain_result(chain)
+                yield event.chain_result(chain)
+                await asyncio.sleep(5)
+
             subprocess.run(['rm', output_file], check=True)
 
         except Exception as e:
