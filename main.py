@@ -159,6 +159,7 @@ class SetuPlugin(Star):
             output_file = title + '.wav'
             # 执行转换
             output_files=await self.convert_to_wechat_mp3(input_file, output_file)
+            output_files=sorted(output_files, key=lambda x: int(x[6:9]))
             for item in output_files:
                 yield event.plain_result(item)
             for i in range(len(output_files)):
