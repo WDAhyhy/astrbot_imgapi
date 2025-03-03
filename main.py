@@ -3,7 +3,14 @@ from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star, register
 import aiohttp
 import asyncio
-
+import hashlib
+import random
+import string
+import requests
+import xml.etree.ElementTree as ET
+import subprocess
+import re
+from astrbot.api.message_components import Video
 @register("fish_apiimg", "案板上的鹹魚", "从API获取图片。双路径：使用 /img 和/imgh 获取。(自用)", "1.0")
 class SetuPlugin(Star):
     def __init__(self, context: Context, config: dict):
@@ -78,3 +85,60 @@ class SetuPlugin(Star):
                     yield event.chain_result(chain)
                 except Exception as e:
                     yield event.plain_result(f"\n请求失败: {str(e)}")
+
+    def sanitize_filename(self,filename):
+        """ 清理文件名非法字符 """
+        return re.sub(r'[\\/:*?"<>|]', '_', filename)
+
+    def convert_to_wechat_mp3(self,input_file, output_file):
+        """
+        使用 ffmpeg 把歌曲转换成微信语音格式（amr-nb 8000Hz 单声道）
+        """
+        command = [
+            'ffmpeg',
+            '-i', input_file,  # 输入文件
+            '-ar', '22050',  # 采样率22.05kHz（降低采样率以减少文件大小）
+            '-ac', '1',  # 单声道
+            '-b:a', '32k',  # 比特率32kbps（极限压缩）
+            '-y',  # 覆盖已有文件
+            output_file  # 输出文件（记得保证后缀是.mp3）
+        ]
+        subprocess.run(command, check=True)
+        subprocess.run(['rm', input_file], check=True)
+
+    @filter.command("getsong")
+    async def get_song(self, event: AstrMessageEvent):
+        try:
+            username = 'admin'
+            password = 'qwer3866373'
+            size = "1"
+            # 生成一个随机盐值（至少6个字符）
+            salt = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+            # 计算 token
+            token = hashlib.md5(f'{password}{salt}'.encode('utf-8')).hexdigest()
+            url = f'https://music.icystar.de/rest/getRandomSongs?u={username}&t={token}&s={salt}&v=1.16.1&c=myapp&size={size}'
+            response = requests.get(url)
+            root = ET.fromstring(response.text)
+            # 解析 XML 时，处理命名空间
+            namespace = {'subsonic': 'http://subsonic.org/restapi'}
+            # 提取歌曲信息
+            random_songs = root.findall('.//subsonic:randomSongs/subsonic:song', namespace)
+            song_id = song.get('id')
+            title = song.get('title')
+            album = song.get('album')
+            artist = song.get('artist')
+            year = song.get('year')
+            duration = song.get('duration')
+            path = song.get('path')
+
+            input_file = filename
+            output_file = title + '.mp3'
+            # 执行转换
+            self.convert_to_wechat_mp3(input_file, output_file)
+            music = Video.fromFileSystem(
+                path=output_file
+            )
+            subprocess.run(['rm', output_file], check=True)
+            yield event.chain_result([music])
+        except Exception as e:
+            yield event.plain_result(f"\n请求失败: {str(e)}")
