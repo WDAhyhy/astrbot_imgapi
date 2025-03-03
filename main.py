@@ -143,10 +143,11 @@ class SetuPlugin(Star):
             output_file = title + '.mp3'
             # 执行转换
             self.convert_to_wechat_mp3(input_file, output_file)
-            music = Video.fromFileSystem(
-                path=output_file
-            )
+            # music = Video.fromFileSystem(
+            #     path=output_file
+            # )
+            yield event.chain_result([Record.fromFileSystem(output_file), Plain("已经发送音乐")])
             subprocess.run(['rm', output_file], check=True)
-            yield event.chain_result([Record.fromFileSystem(output_file),Plain("已经发送音乐")])
+            
         except Exception as e:
             yield event.plain_result(f"\n请求失败: {str(e)}")
