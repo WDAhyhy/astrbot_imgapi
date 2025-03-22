@@ -1,6 +1,7 @@
 from astrbot.api.message_components import *
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star, register
+from openai import OpenAI
 import aiohttp
 import asyncio
 import hashlib
@@ -12,6 +13,7 @@ import subprocess
 import re
 import glob
 from astrbot.api.message_components import Video
+XAI_API_KEY = "xai-71gxWya9dijWtPnehDjhm8RzNHzaum3ZTya9CcaMFEQl00OrrOxGCnKEbCB7KVAinhKJC1FMnsrcBTad"
 @register("fish_apiimg", "案板上的鹹魚", "从API获取图片。双路径：使用 /img 和/imgh 获取。(自用)", "1.0")
 class SetuPlugin(Star):
     def __init__(self, context: Context, config: dict):
@@ -177,3 +179,26 @@ class SetuPlugin(Star):
 
         except Exception as e:
             yield event.plain_result(f"\n请求失败: {str(e)}")
+
+    @filter.command("pic")
+    async def get_pic(self, event: AstrMessageEvent,prompt:str,n: int = 1):
+        client = OpenAI(base_url="https://api.x.ai/v1", api_key=XAI_API_KEY)
+
+        response = client.images.generate(
+            model="grok-2-image",
+            prompt=prompt,
+            n=n
+        )
+        for image in response.data:
+            try:
+                # 构建消息链
+                chain = [
+                    Plain(f"正在发送~~~({i + 1}/{n})"),
+                    Image.fromURL(self.h_url)  # 从URL加载图片
+                ]
+
+                yield event.chain_result(chain)
+                await asyncio.sleep(1)
+            except Exception as e:
+                yield event.plain_result(f"\n请求失败: {str(e)}")
+
