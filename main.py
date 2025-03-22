@@ -193,7 +193,7 @@ class SetuPlugin(Star):
             try:
                 # 构建消息链
                 chain = [
-                    Image.fromURL(self.h_url)  # 从URL加载图片
+                    Image.fromURL(image.url)  # 从URL加载图片
                 ]
 
                 yield event.chain_result(chain)
