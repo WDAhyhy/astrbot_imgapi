@@ -193,7 +193,6 @@ class SetuPlugin(Star):
             try:
                 # 构建消息链
                 chain = [
-                    Plain(f"正在发送~~~({i + 1}/{n})"),
                     Image.fromURL(self.h_url)  # 从URL加载图片
                 ]
 
