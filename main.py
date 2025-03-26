@@ -13,13 +13,14 @@ import subprocess
 import re
 import glob
 from astrbot.api.message_components import Video
-XAI_API_KEY = "xai-71gxWya9dijWtPnehDjhm8RzNHzaum3ZTya9CcaMFEQl00OrrOxGCnKEbC7KVAinhKJC1FMnsrcBTad"
+
 @register("fish_apiimg", "案板上的鹹魚", "从API获取图片。双路径：使用 /img 和/imgh 获取。(自用)", "1.0")
 class SetuPlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.config = config
         self.api_url = config.get("api_url", "")
+        self.xaikey = config.get("xai-key", "")
         self.h_url = self.api_url +'/H'
         self.nh_url = self.api_url +'/NON-H'
     @filter.command("img")
@@ -182,7 +183,7 @@ class SetuPlugin(Star):
 
     @filter.command("pic")
     async def get_pic(self, event: AstrMessageEvent,prompt:str,n: int = 1):
-        client = OpenAI(base_url="https://api.x.ai/v1", api_key=XAI_API_KEY)
+        client = OpenAI(base_url="https://api.x.ai/v1", api_key=self.xaikey)
 
         response = client.images.generate(
             model="grok-2-image",
