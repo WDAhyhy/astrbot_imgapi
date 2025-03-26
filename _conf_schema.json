@@ -4,5 +4,11 @@
         "type": "string",
         "hint": "填写获取随机图片的API地址",
         "default": ""
+    },
+    "xai-key": {
+        "description": "xai-api-key",
+        "type": "string",
+        "hint": "填写x-ai的api秘钥",
+        "default": ""
     }
 }
