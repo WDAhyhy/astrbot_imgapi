@@ -13,7 +13,7 @@ import subprocess
 import re
 import glob
 from astrbot.api.message_components import Video
-XAI_API_KEY = "xai-71gxWya9dijWtPnehDjhm8RzNHzaum3ZTya9CcaMFEQl00OrrOxGCnKEbCB7KVAinhKJC1FMnsrcBTad"
+XAI_API_KEY = "xai-71gxWya9dijWtPnehDjhm8RzNHzaum3ZTya9CcaMFEQl00OrrOxGCnKEbC7KVAinhKJC1FMnsrcBTad"
 @register("fish_apiimg", "案板上的鹹魚", "从API获取图片。双路径：使用 /img 和/imgh 获取。(自用)", "1.0")
 class SetuPlugin(Star):
     def __init__(self, context: Context, config: dict):
