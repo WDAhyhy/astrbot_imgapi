@@ -19,10 +19,13 @@ class SetuPlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.config = config
-        self.api_url = config.get("api_url", "")
+        self.h_url = config.get("api_h_url", "")
+        self.nh_url = config.get("api_nh_url", "")
         self.xaikey = config.get("xai-key", "")
-        self.h_url = self.api_url +'/H'
-        self.nh_url = self.api_url +'/NON-H'
+        self.user = config.get("user", "")
+        self.pass = config.get("pass", "")
+        
+        
     @filter.command("img")
     async def get_tu(self, event: AstrMessageEvent,n: int = 1):
         if n>20 :
@@ -128,8 +131,8 @@ class SetuPlugin(Star):
     @filter.command("getsong")
     async def get_song(self, event: AstrMessageEvent):
         try:
-            username = 'admin'
-            password = 'qwer3866373'
+            username = self.user
+            password = self.pass
             size = "1"
             # 生成一个随机盐值（至少6个字符）
             salt = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
