@@ -23,7 +23,7 @@ class SetuPlugin(Star):
         self.nh_url = config.get("api_nh_url", "")
         self.xaikey = config.get("xai-key", "")
         self.user = config.get("user", "")
-        self.pass = config.get("pass", "")
+        self.password = config.get("pass", "")
         
         
     @filter.command("img")
@@ -128,7 +128,7 @@ class SetuPlugin(Star):
     async def get_song(self, event: AstrMessageEvent):
         try:
             username = self.user
-            password = self.pass
+            password = self.password
             size = "1"
             # 生成一个随机盐值（至少6个字符）
             salt = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
