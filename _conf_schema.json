@@ -1,5 +1,11 @@
 {
-    "api_url": {
+    "api_h_url": {
+        "description": "随机图片API地址",
+        "type": "string",
+        "hint": "填写获取随机图片的API地址",
+        "default": ""
+    },
+    "api_nh_url": {
         "description": "随机图片API地址",
         "type": "string",
         "hint": "填写获取随机图片的API地址",
@@ -9,6 +15,18 @@
         "description": "xai-api-key",
         "type": "string",
         "hint": "填写x-ai的api秘钥",
+        "default": ""
+    },
+    "user": {
+        "description": "navidrome用户",
+        "type": "string",
+        "hint": "",
+        "default": ""
+    },
+    "pass": {
+        "description": "navidrome密码",
+        "type": "string",
+        "hint": "",
         "default": ""
     }
 }
